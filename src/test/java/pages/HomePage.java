@@ -1,5 +1,6 @@
 package pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import locators.HomeLocators;
 
@@ -13,5 +14,9 @@ public class HomePage {
 
     public void clickViews() {
         driver.findElement(HomeLocators.VIEWS).click();
+    }
+
+    public void clickApp() {
+        driver.findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"App\")")).click();
     }
 }

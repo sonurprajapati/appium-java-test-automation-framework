@@ -1,14 +1,21 @@
 package pages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.appium.java_client.android.AndroidDriver;
 import locators.DateWidgetsLocators;
 
 public class DateWidgetsPage {
 
     private final AndroidDriver driver;
+    WebDriverWait wait;
 
     public DateWidgetsPage(AndroidDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public void clickDialog() {
@@ -20,6 +27,7 @@ public class DateWidgetsPage {
     }
 
     public void clickNextMonth() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(DateWidgetsLocators.NEXT_MONTH));
         driver.findElement(DateWidgetsLocators.NEXT_MONTH).click();
     }
 
