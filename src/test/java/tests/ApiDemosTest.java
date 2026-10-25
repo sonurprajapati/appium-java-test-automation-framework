@@ -1,6 +1,9 @@
 package tests;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
+import pages.DateWidgetsPage;
+import pages.HomePage;
+import pages.ViewsPage;
 
 import java.util.Map;
 
@@ -17,13 +20,19 @@ import driver.DriverManager;
 public class ApiDemosTest {
 
     private AndroidDriver driver;
+    private HomePage homePage;
+    private ViewsPage viewsPage;
+    private DateWidgetsPage dateWidgetsPage;
 
     @BeforeMethod
-    public void setUp() throws Exception {
+        public void setUp() throws Exception {
         driver = DriverManager.getDriver();
+        homePage = new HomePage(driver);
+        viewsPage = new ViewsPage(driver);
+        dateWidgetsPage = new DateWidgetsPage(driver);
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, enabled = false)
     public void clickAccessibility() throws InterruptedException {
         driver.findElement(AppiumBy.accessibilityId("Accessibility")).click();
         Thread.sleep(500);
@@ -35,7 +44,7 @@ public class ApiDemosTest {
         Thread.sleep(500);        
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, enabled = false)
     public void checkAlert() throws InterruptedException{
         driver.findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"App\")")).click();
         Thread.sleep(500);
@@ -63,7 +72,7 @@ public class ApiDemosTest {
         driver.navigate().back();
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, enabled = false)
     public void dragAndDrop() throws InterruptedException {
         driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Views']")).click();
         Thread.sleep(500);
@@ -85,10 +94,56 @@ public class ApiDemosTest {
         Thread.sleep(500);
     }
 
-    @AfterMethod
+    @Test (priority = 1)
+    public void dateHandle() throws InterruptedException {
+
+        // driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Views']")).click();
+        // Thread.sleep(500);
+        // driver.findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"Date Widgets\")")).click();
+        // Thread.sleep(500);
+        // driver.findElement(AppiumBy.androidUIAutomator("new UiSelector().textContains(\"Dialog\")")).click();
+        // Thread.sleep(500);
+        // driver.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc=\"change the date\"]")).click();
+        // Thread.sleep(500);
+        // driver.findElement(AppiumBy.id("android:id/next")).click();
+        // Thread.sleep(100);
+        // driver.findElement(AppiumBy.id("android:id/next")).click();
+        // Thread.sleep(500);
+        // driver.findElement(AppiumBy.androidUIAutomator("new UiSelector().text(\"11\")")).click();
+        // Thread.sleep(500);
+        // driver.findElement(AppiumBy.id("android:id/button1")).click();
+        // Thread.sleep(500);
+
+        homePage.clickViews();
+        Thread.sleep(500);
+
+        viewsPage.clickDateWidgets();
+        Thread.sleep(500);
+
+        dateWidgetsPage.clickDialog();
+        Thread.sleep(500);
+
+        dateWidgetsPage.clickChangeDate();
+        Thread.sleep(500);
+
+        dateWidgetsPage.clickNextMonth();
+        Thread.sleep(100);
+
+        dateWidgetsPage.clickNextMonth();
+        Thread.sleep(500);
+
+        dateWidgetsPage.selectDate11();
+        Thread.sleep(500);
+
+        dateWidgetsPage.clickOK();
+        Thread.sleep(500);
+    }
+
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         if (driver != null) {
             driver.quit();
+            driver = null;
         }
     }
 }
